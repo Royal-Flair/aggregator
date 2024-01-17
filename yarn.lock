@@ -54,6 +54,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-5.7.0.tgz#b92021e0b2009f5a6f510439c2782ed73273ecf2"
   integrity sha512-zoEdsYQHI1zz2vjKsTpu5bSfxQQ5jrk3Qs6Op9MYcckZZ2QWIs0YpL99p+zODXNpkkyLG73NXEIrOjvyI9jx8A==
 
+"@capacitor/push-notifications@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-5.1.1.tgz#512cbd6926109a79fa9656a5a870c20e88304455"
+  integrity sha512-lPtjlMG/PXKZEQjFFI3uqDqC8XaVjOosStvMZMVgxHgn2U45J3QRznUdVR0d6XqLmHnilxLs8ZNislkie0QfPA==
+
 "@ionic/cli-framework-output@^2.2.5":
   version "2.2.8"
   resolved "https://registry.npmjs.org/@ionic/cli-framework-output/-/cli-framework-output-2.2.8.tgz"
