@@ -9,7 +9,7 @@ const Layout: React.FC<DashboardLayoutProps> = ({ children  }) => {
     return (
         <>
             {children}
-            <Bottombar />
+            {/* <Bottombar /> */}
         </>
     );
 };
