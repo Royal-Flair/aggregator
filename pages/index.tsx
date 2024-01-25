@@ -4,6 +4,7 @@ import BaseUserFeed from '@/components/Feed';
 import { PostCard } from '@/components/post-card';
 import SearchBar from '@/components/Content/AddToFeed';
 import Link from 'next/link';
+import NotificationButton from '@/components/Widgets/Notification';
 
 export default function Home() {
   const handleAddToFeed = (url: string) => {
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <div className="flex flex-col items-center justify-center my-2">
         <SearchBar onAddToFeed={handleAddToFeed} />
+        <NotificationButton />
         <PostCard />
       </div>
       <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
