@@ -13,7 +13,7 @@ export function PostCard() {
               <div className="p-4">
                 <div className="flex items-center space-x-4">
                   <div className="overflow-hidden rounded-full border border-gray-200">
-                    <Image
+                    <img
                       alt="Avatar"
                       height={40}
                       src="https://i.pravatar.cc/48?img=13"
