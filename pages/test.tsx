@@ -1,15 +1,24 @@
-import { SettingsPane } from "../components/settings-pane";
-import Link from "next/link";
+import { PostCard } from '../components/post-card';
+import SearchBar from "../components/Content/AddToFeed"
+import Link from 'next/link';
+import React from 'react';
+import { Announcement } from '../components/Content/Announcements';
+import announcements from '../components/Content/Announcements';
 
-export default function Settings() {
-    return (
-        <>
-            <div className="flex flex-col items-center justify-center my-2">
-                <SettingsPane />
-            </div>
-            <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+export default function Home() {
+  const handleAddToFeed = (url: string) => {
+    console.log("Adding URL to feed:", url);
+  };
+
+  return (      
+    <>
+      <div className="flex flex-col items-center justify-center my-2">
+        <SearchBar onAddToFeed={handleAddToFeed} />
+        <PostCard announcements={announcements} />
+      </div>
+      <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
         <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium py-3">
-        <Link href="/"><button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+            <Link href="/"><button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                 <svg className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                 </svg>
@@ -36,6 +45,6 @@ export default function Settings() {
             </button></Link>
         </div>
     </div>
-        </>
-    );
+    </>
+  );
 };

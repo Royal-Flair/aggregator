@@ -1,4 +1,4 @@
-interface Announcement {
+export interface Announcement {
     date: string;
     text: string;
     author: string;
