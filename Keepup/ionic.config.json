@@ -1,0 +1,7 @@
+{
+  "name": "Keepup",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
