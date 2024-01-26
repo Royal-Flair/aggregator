@@ -1,5 +1,7 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "./ui/card";
 import announcements from "./Content/Announcements";
+import React from "react";
+import Image from "next/image";
 
 export function PostCard() {
   return (
@@ -11,7 +13,7 @@ export function PostCard() {
               <div className="p-4">
                 <div className="flex items-center space-x-4">
                   <div className="overflow-hidden rounded-full border border-gray-200">
-                    <img
+                    <Image
                       alt="Avatar"
                       height={40}
                       src="https://i.pravatar.cc/48?img=13"

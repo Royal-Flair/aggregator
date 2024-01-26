@@ -1,10 +1,7 @@
-import Image from 'next/image'
-import Layout from '@/components/Core/Layout'
-import BaseUserFeed from '@/components/Feed';
-import { PostCard } from '@/components/post-card';
-import SearchBar from '@/components/Content/AddToFeed';
+import { PostCard } from '../components/post-card';
+import SearchBar from "../components/Content/AddToFeed"
 import Link from 'next/link';
-import NotificationButton from '@/components/Widgets/Notification';
+import React from 'react';
 
 export default function Home() {
   const handleAddToFeed = (url: string) => {
@@ -15,7 +12,6 @@ export default function Home() {
     <>
       <div className="flex flex-col items-center justify-center my-2">
         <SearchBar onAddToFeed={handleAddToFeed} />
-        <NotificationButton />
         <PostCard />
       </div>
       <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -35,7 +31,7 @@ export default function Home() {
             </button></Link>
             <Link href="/settings"><button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                 <svg className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
                 </svg>
                 <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Settings</span>
             </button></Link>
