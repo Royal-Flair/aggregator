@@ -1,10 +1,15 @@
+// components/book-card.tsx
+
 import { Card } from "./ui/card";
-import announcements from "./Content/Bookmarks";
 import React from "react";
 import { FaBookmark } from "react-icons/fa";
-import Image from "next/image";
+import { Announcement } from "./Content/Announcements"; // Import the Announcement interface
 
-export function PostCard() {
+interface PostCardProps {
+  announcements: Announcement[]; // Define the prop type
+}
+
+export function PostCard({ announcements }: PostCardProps) { // Use the prop
   return (
     <div className="flex justify-center py-4">
       <div className="px-2 max-w-screen-lg w-full">
