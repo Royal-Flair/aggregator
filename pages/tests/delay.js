@@ -19,6 +19,7 @@ const Index = () => {
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [subscription, setSubscription] = useState(null)
   const [registration, setRegistration] = useState(null)
+  const [delayedTime, setDelayedTime] = useState(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator && window.workbox !== undefined) {
@@ -57,26 +58,42 @@ const Index = () => {
     console.log('web push unsubscribed!')
   }
 
-  const sendNotification = async (delayInSeconds) => {
+  const sendNotificationButtonOnClick = async event => {
+    event.preventDefault()
     if (subscription == null) {
       console.error('web push not subscribed')
       return
     }
 
-    // Calculate the time to schedule the notification
-    const scheduledTime = new Date(Date.now() + delayInSeconds * 1000)
+    // Without delay
+    // await fetch('/api/notification', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     subscription
+    //   })
+    // })
 
-    // Send the notification with the scheduled time
+    // With delay
+    if (delayedTime) {
+      await delay(delayedTime); // Wait for the delay
+    }
     await fetch('/api/notification', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        subscription,
-        scheduledTime
+        subscription
       })
     })
+  }
+
+  // Function to delay execution for a specified time
+  const delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   return (
@@ -91,18 +108,12 @@ const Index = () => {
         <button onClick={unsubscribeButtonOnClick} disabled={!isSubscribed}>
           Unsubscribe
         </button><br />
-        <button onClick={() => sendNotification(10)} disabled={!isSubscribed}>
+        <button onClick={sendNotificationButtonOnClick} disabled={!isSubscribed}>
           Send Notification
         </button><br />
-        <button onClick={() => sendNotification(10)} disabled={!isSubscribed}>
-          Send Reminder in 10 Seconds
-        </button><br />
-        <button onClick={() => sendNotification(18)} disabled={!isSubscribed}>
-          Send Reminder in 18 Seconds
-        </button><br />
-        <button onClick={() => sendNotification(24)} disabled={!isSubscribed}>
-          Send Reminder in 24 Seconds
-        </button>
+        <button onClick={() => setDelayedTime(10000)}>Send with 10 seconds delay</button><br />
+        <button onClick={() => setDelayedTime(18000)}>Send with 18 seconds delay</button><br />
+        <button onClick={() => setDelayedTime(24000)}>Send with 24 seconds delay</button><br />
       </center>
       <Home />
     </>
