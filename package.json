@@ -11,6 +11,7 @@
     "vapid": "web-push generate-vapid-keys"
   },
   "dependencies": {
+    "@prisma/client": "^5.10.2",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-toggle": "^1.0.3",
     "class-variance-authority": "^0.7.0",
@@ -18,9 +19,11 @@
     "micro": "^10.0.1",
     "next": "^12.2.5",
     "next-pwa": "latest",
+    "prisma": "^5.10.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
+    "stripe": "^14.19.0",
     "tailwind-merge": "^2.2.1",
     "web-push": "^3.5.0"
   },
