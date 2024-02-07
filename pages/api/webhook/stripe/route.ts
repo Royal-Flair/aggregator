@@ -1,3 +1,5 @@
+"use server"
+
 import { stripe } from '../../../../lib/stripe';
 import { headers } from 'next/headers';
 import Stripe from "stripe";

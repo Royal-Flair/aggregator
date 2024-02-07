@@ -80,7 +80,7 @@ const Index = () => {
       <Head>
         <title>Keepup</title>
       </Head>
-      <center>
+      <div className='mb-5'><center>
         <button onClick={subscribeButtonOnClick} disabled={isSubscribed}>
           Subscribe
         </button><br />
@@ -90,8 +90,9 @@ const Index = () => {
         <button onClick={sendNotificationButtonOnClick} disabled={!isSubscribed}>
           Send Notification
         </button>
-      </center>
-      <Home />
+        </center>
+      <Home /></div>
+      
     </>
   )
 }
