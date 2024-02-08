@@ -1,7 +1,9 @@
+"use client"
+
 // components/book-card.tsx
 
-import { Card } from "./ui/card";
-import { Announcement } from "./Content/Announcements"; // Import Announcement type
+import { Card } from "@/components/ui/card";
+import { Announcement } from "./Announcements";
 import React from "react";
 import { FaBookmark } from "react-icons/fa";
 import Image from "next/image";

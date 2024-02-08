@@ -1,3 +1,5 @@
+"use client"
+
 // bookmarksContext.tsx
 import React, { createContext, useContext, useState, FC, ReactNode } from 'react';
 

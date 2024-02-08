@@ -1,6 +1,8 @@
+"use client"
+
 import React, { useState, useEffect } from "react";
-import { Card } from "./ui/card";
-import { Announcement } from "./Content/Announcements";
+import { Card } from "@/components/ui/card";
+import announcements, { Announcement} from "./Announcements";
 
 interface PostCardProps {
   announcements: Announcement[];
