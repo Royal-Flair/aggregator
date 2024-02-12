@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import announcements, { Announcement} from "./Announcements";
+import { FaBookmark } from "react-icons/fa";
 
 interface PostCardProps {
   announcements: Announcement[];
@@ -26,11 +27,12 @@ export function PostCard({ announcements }: PostCardProps) {
 
   const toggleBookmark = (index: number) => {
     if (bookmarks.includes(index)) {
-      // Remove from bookmarks
       setBookmarks(bookmarks.filter((i) => i !== index));
     } else {
-      // Add to bookmarks
       setBookmarks([...bookmarks, index]);
+      setTimeout(() => {
+        setBookmarks(bookmarks.filter((i) => i !== index));
+      }, 8000);
     }
   };
 
@@ -41,70 +43,40 @@ export function PostCard({ announcements }: PostCardProps) {
           <div key={index} className="w-full mb-4">
             <Card className="w-full border border-gray-200 rounded-lg">
               <div className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-4">
-                    <div className="overflow-hidden rounded-full border border-gray-200">
-                      <img
-                        alt="Avatar"
-                        height={40}
-                        src="https://i.pravatar.cc/48?img=13"
-                        style={{
-                          aspectRatio: "40/40",
-                          objectFit: "cover",
-                        }}
-                        width={40}
-                      />
-                    </div>
-                    <div className="text-sm">
-                      <p className="font-medium">{announcement.author}</p>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Posted on {announcement.date}
-                      </p>
-                    </div>
+                <div className="flex items-center space-x-4">
+                  <div className="overflow-hidden rounded-full border border-gray-200">
+                    <img
+                      alt="Avatar"
+                      height={40}
+                      src="https://i.pravatar.cc/48?img=13"
+                      style={{
+                        aspectRatio: "40/40",
+                        objectFit: "cover",
+                      }}
+                      width={40}
+                    />
                   </div>
-                  <button
-                    className={`${
-                      bookmarks.includes(index) ? "text-blue-500" : "text-gray-400"
-                    } hover:text-blue-500`}
-                    onClick={() => toggleBookmark(index)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      {bookmarks.includes(index) ? (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      ) : (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 6h16M4 12h16m-7 6h7"
-                        />
-                      )}
-                    </svg>
-                  </button>
+                  <div className="text-sm">
+                    <p className="font-medium">{announcement.author}</p>
+                    <p className="text-gray-500 dark:text-gray-400">Posted on {announcement.date}</p>
+                  </div>
+                  <div className="flex items-center">
+                    <FaBookmark
+                      className={`text-gray-500 dark:text-gray-400 ${bookmarks.includes(index) ? "text-blue-500" : ""}`}
+                      onClick={() => toggleBookmark(index)}
+                    />
+                  </div>
                 </div>
                 <div className="mt-4 space-y-2 text-left">
                   <p>{announcement.text}</p>
                   <div className="flex flex-wrap -mx-1.5">
-                    {announcement.tag.split(", ").map((tag, index) => (
-                      <span
-                        key={index}
-                        className="mx-1.5 text-sm text-gray-500 dark:text-gray-400"
-                      >
-                        #{tag}
-                      </span>
+                    {announcement.tag && announcement.tag.split(", ").map((tag, index) => (
+                      <span key={index} className="mx-1.5 text-sm text-gray-500 dark:text-gray-400">#{tag}</span>
                     ))}
                   </div>
+                  {bookmarks.includes(index) && (
+                    <p className="text-gray-500 dark:text-gray-400">You will be reminded of this message in 24 hours</p>
+                  )}
                 </div>
               </div>
             </Card>
@@ -113,4 +85,4 @@ export function PostCard({ announcements }: PostCardProps) {
       </div>
     </div>
   );
-};
+}

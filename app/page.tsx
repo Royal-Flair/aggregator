@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
+import { PostCard } from './components/Content/PostCard';
+import announcements from './components/Content/Announcements';
 
 const base64ToUint8Array = (base64: string): Uint8Array => {
   const padding = '='.repeat((4 - (base64.length % 4)) % 4);
@@ -41,8 +43,7 @@ export default function Home() {
               KeepUp (to date)
             </h1>
             <p className="max-w-xl mx-auto mt-8 text-base lg:text-xl text-secondary-foreground">
-              Never miss out on airdrops, NFTs and content from your favourite projects
-            </p>
+              Never miss out on airdrops, NFTs and content from your favourite projects</p>
           </div>
 
           <div className="flex justify-center max-w-sm mx-auto mt-10">
