@@ -1,15 +1,16 @@
 // components/book-card.tsx
 
 import { Card } from "./ui/card";
+import { Announcement } from "./Content/Announcements"; // Import Announcement type
 import React from "react";
 import { FaBookmark } from "react-icons/fa";
-import { Announcement } from "./Content/Announcements"; // Import the Announcement interface
+import Image from "next/image";
 
 interface PostCardProps {
-  announcements: Announcement[]; // Define the prop type
+  announcements: Announcement[]; // Define prop type
 }
 
-export function PostCard({ announcements }: PostCardProps) { // Use the prop
+export function PostCard({ announcements }: PostCardProps) { // Receive prop
   return (
     <div className="flex justify-center py-4">
       <div className="px-2 max-w-screen-lg w-full">
@@ -39,9 +40,9 @@ export function PostCard({ announcements }: PostCardProps) { // Use the prop
                   </div>
                 </div>
                 <div className="mt-4 space-y-2 text-left"> {/* Align text to the left */}
-                  <p>{announcement.text}</p>
+                  <p>{announcement.text}</p> {/* Render announcement text */}
                   <div className="flex flex-wrap -mx-1.5">
-                    {announcement.tag.split(", ").map((tag, index) => (
+                    {announcement.tag && announcement.tag.split(", ").map((tag, index) => ( // Check if announcement.tag exists
                       <span key={index} className="mx-1.5 text-sm text-gray-500 dark:text-gray-400">#{tag}</span>
                     ))}
                   </div>
