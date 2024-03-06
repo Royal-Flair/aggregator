@@ -10,9 +10,15 @@ import Image from "next/image";
 
 interface PostCardProps {
   announcements: Announcement[]; // Define prop type
+  onRemoveBookmark: (index: number) => void;
 }
 
-export function PostCard({ announcements }: PostCardProps) { // Receive prop
+export function BookmarkCard({ announcements, onRemoveBookmark }: PostCardProps) { // Receive prop
+  const handleBookmarkClick = (index: number) => {
+    // Call the onRemoveBookmark function when the bookmark icon is clicked
+    onRemoveBookmark(index);
+  };
+
   return (
     <div className="flex justify-center py-4">
       <div className="px-2 max-w-screen-lg w-full">
@@ -38,7 +44,10 @@ export function PostCard({ announcements }: PostCardProps) { // Receive prop
                     <p className="text-gray-500 dark:text-gray-400">Posted on {announcement.date}</p>
                   </div>
                   <div className="flex items-center">
-                    <FaBookmark className="text-gray-500 dark:text-gray-400" /> {/* Replace with FaBookmark icon */}
+                    <FaBookmark
+                      className="text-gray-500 dark:text-gray-400"
+                      onClick={() => handleBookmarkClick(index)} // Call handleBookmarkClick on click
+                    />
                   </div>
                 </div>
                 <div className="mt-4 space-y-2 text-left">

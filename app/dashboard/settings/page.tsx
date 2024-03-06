@@ -33,14 +33,6 @@ async function getData(userId: string) {
       name: true,
       email: true,
       colorScheme: true,
-      id: true,
-      stripeCustomerId: true,
-      Adresse: true,
-      Land: true,
-      Fanclub: true,
-      Ort: true,
-      Plz: true,
-      Telefon: true,
     },
   });
 
@@ -57,12 +49,6 @@ export default async function SettingPage() {
 
     const name = formData.get("name") as string;
     const colorScheme = formData.get("color") as string;
-    const Adresse = formData.get("Adresse") as string;
-    const Land = formData.get("Land") as string;
-    const Fanclub = formData.get("Fanclub") as string;
-    const Ort = formData.get("Ort") as string;
-    const Plz = formData.get("Plz") as string;
-    const Telefon = formData.get("Telefon") as string;
 
     await prisma.user.update({
       where: {
@@ -71,12 +57,6 @@ export default async function SettingPage() {
       data: {
         name: name ?? undefined,
         colorScheme: colorScheme ?? undefined,
-        Adresse: Adresse ?? undefined,
-        Land: Land ?? undefined,
-        Fanclub: Fanclub ?? undefined,
-        Ort: Ort ?? undefined,
-        Plz: Plz ?? undefined,
-        Telefon: Telefon ?? undefined,
       },
     });
 
@@ -124,67 +104,6 @@ export default async function SettingPage() {
                   defaultValue={data?.email as string}
                 />
               </div>
-              <div className="space-y-1">
-  <Label>Your Address</Label>
-  <Input
-    name="Adresse"
-    type="text"
-    id="Adresse"
-    placeholder="Your Address"
-    defaultValue={data?.Adresse ?? undefined}
-  />
-</div>
-<div className="space-y-1">
-  <Label>Your Fanclub</Label>
-  <Input
-    name="Fanclub"
-    type="text"
-    id="Fanclub"
-    placeholder="Your Fanclub"
-    defaultValue={data?.Fanclub ?? undefined}
-  />
-</div>
-<div className="space-y-1">
-  <Label>Your Land</Label>
-  <Input
-    name="Land"
-    type="text"
-    id="Land"
-    placeholder="Your Land"
-    defaultValue={data?.Land ?? undefined}
-  />
-</div>
-<div className="space-y-1">
-  <Label>Your City</Label>
-  <Input
-    name="Ort"
-    type="text"
-    id="Ort"
-    placeholder="Your City"
-    defaultValue={data?.Ort ?? undefined}
-  />
-</div>
-<div className="space-y-1">
-  <Label>Your Postal Code</Label>
-  <Input
-    name="Plz"
-    type="text"
-    id="Plz"
-    placeholder="Your Postal Code"
-    defaultValue={data?.Plz ?? undefined}
-  />
-</div>
-<div className="space-y-1">
-  <Label>Your Phone Number</Label>
-  <Input
-    name="Telefon"
-    type="text"
-    id="Telefon"
-    placeholder="Your Phone Number"
-    defaultValue={data?.Telefon ?? undefined}
-  />
-</div>
-
 
               <div className="space-y-1">
                 <Label>Color Scheme</Label>

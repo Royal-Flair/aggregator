@@ -5,21 +5,8 @@ import { Button } from '@/components/ui/button';
 import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
-import { PostCard } from './components/Content/PostCard';
-import announcements from './components/Content/Announcements';
-
-const base64ToUint8Array = (base64: string): Uint8Array => {
-  const padding = '='.repeat((4 - (base64.length % 4)) % 4);
-  const b64 = (base64 + padding).replace(/-/g, '+').replace(/_/g, '/');
-
-  const rawData = window.atob(b64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
+import announcements, { Announcement } from './components/Content/Announcements';
+import { getBookmarkedAnnouncements } from './lib/bookmarks';
 
 export default function Home() {
   // const { isAuthenticated } = getKindeServerSession();
@@ -32,6 +19,19 @@ export default function Home() {
   //   };
   //   checkAuth();
   // }, [isAuthenticated]);
+
+  const handleAddToFeed = (url: string) => {
+    console.log("Adding URL to feed:", url);
+  };
+
+  // Get the bookmarked announcements
+  const [bookmarkedAnnouncements, setBookmarkedAnnouncements] = useState<Announcement[]>([]);
+
+  useEffect(() => {
+    // Fetch bookmarked announcements
+    const bookmarks = getBookmarkedAnnouncements();
+    setBookmarkedAnnouncements(bookmarks);
+  }, []);
 
   return (
     <section className="flex items-center justify-center bg-background h-[90vh]">

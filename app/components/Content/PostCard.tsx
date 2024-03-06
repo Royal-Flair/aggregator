@@ -24,18 +24,22 @@ export function PostCard({ announcements }: PostCardProps) {
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
-
+  
   const toggleBookmark = (index: number) => {
     if (bookmarks.includes(index)) {
-      setBookmarks(bookmarks.filter((i) => i !== index));
+      // Remove bookmark from bookmarks state
+      const updatedBookmarks = bookmarks.filter((i) => i !== index);
+      setBookmarks(updatedBookmarks);
+      // Remove bookmark from local storage
+      localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
     } else {
+      // Add bookmark to bookmarks state
       setBookmarks([...bookmarks, index]);
-      setTimeout(() => {
-        setBookmarks(bookmarks.filter((i) => i !== index));
-      }, 8000);
+      // Save bookmarks to local storage
+      localStorage.setItem("bookmarks", JSON.stringify([...bookmarks, index]));
     }
   };
-
+  
   return (
     <div className="flex justify-center py-4">
       <div className="px-2 max-w-screen-lg w-full">

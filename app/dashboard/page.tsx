@@ -4,10 +4,9 @@ import prisma from "../lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Edit, File, Trash } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import announcements from "../components/Content/Announcements";
+
 import { TrashDelete } from "../components/Submitbuttons";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
-import { PostCard } from "../components/Content/PostCard";
 
 async function getData(userId: string) {
   noStore();
@@ -27,6 +26,7 @@ async function getData(userId: string) {
           createdAt: "desc",
         },
       },
+
       Subscription: {
         select: {
           status: true,
@@ -60,11 +60,7 @@ export default async function DashboardPage() {
     <div className="grid items-start gap-y-8">
       <div className="flex items-center justify-between px-2">
         <div className="grid gap-1">
-        <div className="relative z-10 flex flex-col items-center justify-center py-10">
-        <PostCard announcements={announcements} />
-      </div>
-        {/* <iframe src="https://keepuptodatetalon-27d7578yy-gizmotronn.vercel.app/" height='600px' width='100%' /> */}
-          {/* <h1 className="text-3xl md:text-4xl">Your Notes</h1>
+          <h1 className="text-3xl md:text-4xl">Your Notes</h1>
           <p className="text-lg text-muted-foreground">
             Here you can see and create new notes
           </p>
@@ -79,11 +75,9 @@ export default async function DashboardPage() {
             <Link href="/dashboard/billing">Create a new Note</Link>
           </Button>
         )}
-       */}
-       </div>
-       </div>
+      </div>
 
-      {/* {data?.Notes.length == 0 ? (
+      {data?.Notes.length == 0 ? (
         <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
             <File className="w-10 h-10 text-primary" />
@@ -137,7 +131,9 @@ export default async function DashboardPage() {
                 </form>
               </div>
             </Card>
-          ))} */}
+          ))}
+        </div>
+      )}
     </div>
   );
 }

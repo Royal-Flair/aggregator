@@ -18,11 +18,11 @@ import {
 import { unstable_noStore as noStore } from "next/cache";
 
 const featureItems = [
-  { name: "Keep Up Monthly Subscription" },
-  // { name: "Lorem Ipsum something" },
-  // { name: "Lorem Ipsum something" },
-  // { name: "Lorem Ipsum something" },
-  // { name: "Lorem Ipsum something" },
+  { name: "Lorem Ipsum something" },
+  { name: "Lorem Ipsum something" },
+  { name: "Lorem Ipsum something" },
+  { name: "Lorem Ipsum something" },
+  { name: "Lorem Ipsum something" },
 ];
 
 async function getData(userId: string) {
@@ -67,10 +67,10 @@ export default async function BillingPage() {
 
     const subscriptionUrl = await getStripeSession({
       customerId: dbUser.stripeCustomerId,
-      domainUrl: 'https://keepuptodatetalon.vercel.app',
-        // process.env.NODE_ENV == "production"
-        //   ? (process.env.PRODUCTION_URL as string)
-        //   : "https://keepuptodatetalon.vercel.app",
+      domainUrl:
+        process.env.NODE_ENV == "production"
+          ? (process.env.PRODUCTION_URL as string)
+          : "http://localhost:3000",
       priceId: process.env.STRIPE_PRICE_ID as string,
     });
 
@@ -81,10 +81,10 @@ export default async function BillingPage() {
     "use server";
     const session = await stripe.billingPortal.sessions.create({
       customer: data?.user.stripeCustomerId as string,
-      return_url: 'https://keepuptodatetalon.vercel.app/dashboard'
-        // process.env.NODE_ENV === "production"
-        //   ? (process.env.PRODUCTION_URL as string)
-        //   : "https://keepuptodatetalon.vercel.app/dashboard",
+      return_url:
+        process.env.NODE_ENV === "production"
+          ? (process.env.PRODUCTION_URL as string)
+          : "http://localhost:3000/dashboard",
     });
 
     return redirect(session.url);
@@ -132,10 +132,10 @@ export default async function BillingPage() {
           </div>
 
           <div className="mt-4 flex items-baseline text-6xl font-extrabold">
-           $10 <span className="ml-1 text-2xl text-muted-foreground">/mo</span>
+            $30 <span className="ml-1 text-2xl text-muted-foreground">/mo</span>
           </div>
           <p className="mt-5 text-lg text-muted-foreground">
-            Keep an eye on all your assets for $10 a month
+            Write as many notes as you want for $30 a Month
           </p>
         </CardContent>
         <div className="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-secondary rounded-lg m-1 space-y-6 sm:p-10 sm:pt-6">

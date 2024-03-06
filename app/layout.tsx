@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
-  title: "NK12",    
+  title: "Keepup",    
 };
 
 async function getData(userId: string) {
