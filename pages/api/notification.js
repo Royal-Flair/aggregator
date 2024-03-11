@@ -31,7 +31,7 @@ const Notification = (req, res) => {
   } else {
     res.statusCode = 405
     res.end()
-  }
-}
+  };
+};
 
-export default Notification
+export default Notification;

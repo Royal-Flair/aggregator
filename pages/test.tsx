@@ -12,7 +12,7 @@ export default function Home() {
 
   return (      
     <>
-      <div className="flex flex-col items-center justify-center my-2">
+      <div className="relative z-10 flex flex-col items-center justify-center py-10">
         <SearchBar onAddToFeed={handleAddToFeed} />
         <PostCard announcements={announcements} />
       </div>
@@ -47,4 +47,5 @@ export default function Home() {
     </div>
     </>
   );
+  
 };
