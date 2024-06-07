@@ -1,4 +1,4 @@
-import { Button } from "../../../../UI/button";
+import { Button } from "../../../UI/button";
 import {
   Card,
   CardContent,
@@ -16,14 +16,6 @@ import {
   StripeSubscriptionCreationButton,
 } from "@/app/components/Submitbuttons";
 import { unstable_noStore as noStore } from "next/cache";
-
-const allowedEmails = [
-  "wuppi@nk12.de",
-  "poeschke@nk12.de",
-  "liam@skinetics.tech",
-  "kyuedupfavghdqxcnf@cazlg.com",
-  "ahvlybvleaxjiymajb@cazlp.com",
-];
 
 async function getData(userId: string) {
   noStore();
@@ -47,21 +39,12 @@ async function getData(userId: string) {
 export default async function BillingPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const userEmail = user?.email ?? '';
-
-  // Check if the user is in the allowed email list
-  if (!allowedEmails.includes(userEmail)) {
-    return (
-      <p>Only administrators can do this</p>
-    );
-  }
-
   const data = await getData(user?.id as string);
 
   if (data?.status === "active") {
     return (
       <div className="grid items-start gap-8">
-        <iframe src="https://nordkurve12.vercel.app/create" height="1500px" width="95%" />
+        <iframe src="https://nk12shop.vercel.app" height="1500px" width="95%" />
       </div>
     );
   }

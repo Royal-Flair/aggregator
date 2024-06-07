@@ -33,8 +33,8 @@ export default async function RootLayout({
   const user = await getUser();
   const data = await getData(user?.id as string);
 
-  const APP_NAME = 'Keepup';
-  const APP_DESCRIPTION = 'Keep up to date';
+  const APP_NAME = 'Nordkurve';
+  const APP_DESCRIPTION = 'Bayer 04 Ultras';
 
   return (
     <html lang="en">

@@ -9,16 +9,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BellElectric, BookmarkIcon, CreditCard, DoorClosed, Home, Settings } from "lucide-react";
+import { BellElectric, BookmarkIcon, CreditCard, DoorClosed, Home, PenBoxIcon, PencilIcon, Settings, StoreIcon } from "lucide-react";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-
 import Link from "next/link";
+
+const allowedEmails = [
+  "wuppi@nk12.de",
+  "poeschke@nk12.de",
+  "liam@skinetics.tech",
+  "kyuedupfavghdqxcnf@cazlg.com",
+  "ahvlybvleaxjiymajb@cazlp.com",
+];
 
 export const navItems = [
   { name: "Home", href: "/dashboard", icon: Home },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-  { name: "Billing", href: "/dashboard/billing", icon: CreditCard },
-  // { name: "Reminders", href: "https://keepuptodatetalon-dfctrons6-gizmotronn.vercel.app/", icon: BellElectric },
+  { name: "Profile", href: "/dashboard/settings", icon: Settings },
+  { name: "Newsletter", href: "/dashboard/posts", icon: PenBoxIcon },
+  { name: "Merch & Tours", href: "https://nk12shop.vercel.app", icon: CreditCard },
 ];
 
 export function UserNav({
@@ -30,6 +37,14 @@ export function UserNav({
   email: string;
   image: string;
 }) {
+  // Determine if the user can create article based on email
+  const userCanCreateArticle = allowedEmails.includes(email);
+
+  // Add "Create article" to navItems if user is allowed
+  if (userCanCreateArticle) {
+    navItems.push({ name: "Create article", href: "/dashboard/posts/create", icon: PencilIcon });
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -66,7 +81,6 @@ export function UserNav({
           ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-
         <DropdownMenuItem
           className="w-full flex justify-between items-center"
           asChild
