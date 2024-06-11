@@ -8,7 +8,6 @@ import { Navbar } from "./components/Navbar";
 import prisma from "./lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { unstable_noStore as noStore } from "next/cache";
-import BookmarksProvider from "./components/Context/BookmarkContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -73,7 +72,6 @@ export default async function RootLayout({
             }
             `}</style>
         </Head> */}
-        <BookmarksProvider>
       <body
         className={`${inter.className} ${data?.colorScheme ?? "theme-zinc"}`}
       >
@@ -87,7 +85,6 @@ export default async function RootLayout({
           {children}
         </ThemeProvider>
       </body>
-      </BookmarksProvider>
     </html>
   );
 }

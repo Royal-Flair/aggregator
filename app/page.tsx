@@ -6,7 +6,6 @@ import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import announcements, { Announcement } from './components/Content/Announcements';
-import { getBookmarkedAnnouncements } from './lib/bookmarks';
 
 export default function Home() {
   // const { isAuthenticated } = getKindeServerSession();
@@ -23,15 +22,6 @@ export default function Home() {
   const handleAddToFeed = (url: string) => {
     console.log("Adding URL to feed:", url);
   };
-
-  // Get the bookmarked announcements
-  const [bookmarkedAnnouncements, setBookmarkedAnnouncements] = useState<Announcement[]>([]);
-
-  useEffect(() => {
-    // Fetch bookmarked announcements
-    const bookmarks = getBookmarkedAnnouncements();
-    setBookmarkedAnnouncements(bookmarks);
-  }, []);
 
   return (
     <section className="flex items-center justify-center bg-background h-[90vh]">

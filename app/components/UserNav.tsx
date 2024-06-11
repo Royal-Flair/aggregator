@@ -19,7 +19,6 @@ export const navItems = [
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
   { name: "Billing", href: "/dashboard/billing", icon: CreditCard },
   // { name: "Reminders", href: "https://keepuptodatetalon-dfctrons6-gizmotronn.vercel.app/", icon: BellElectric },
-  { name: "Bookmarks", href: "/dashboard/bookmarks", icon: BookmarkIcon },
 ];
 
 export function UserNav({
