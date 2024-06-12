@@ -127,15 +127,15 @@ export default async function BillingPage() {
         <CardContent className="py-8">
           <div>
             <h3 className="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-primary/10 text-primary">
-              Monthly
+              Yearly
             </h3>
           </div>
 
           <div className="mt-4 flex items-baseline text-6xl font-extrabold">
-            $30 <span className="ml-1 text-2xl text-muted-foreground">/mo</span>
+            €19.04 <span className="ml-1 text-2xl text-muted-foreground">/y</span>
           </div>
           <p className="mt-5 text-lg text-muted-foreground">
-            Write as many notes as you want for $30 a Month
+            Be part of the NK for €19.04 / year
           </p>
         </CardContent>
         <div className="flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-secondary rounded-lg m-1 space-y-6 sm:p-10 sm:pt-6">
