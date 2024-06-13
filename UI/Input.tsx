@@ -1,8 +1,7 @@
 import { inputAnatomy } from "@chakra-ui/anatomy";
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(inputAnatomy.keys);
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(inputAnatomy.keys);
 
 const formInput = definePartsStyle({
   field: {
@@ -18,7 +17,7 @@ const formInput = definePartsStyle({
 
 const formInputFile = definePartsStyle({
   field: {
-    height:"3em",
+    height: "3em",
     fontFamily: "Inter",
     borderRadius: "5px",
     padding: "0.5em",
@@ -34,4 +33,6 @@ const variants = {
   "form-input-file": formInputFile,
 };
 
-export const Input = defineMultiStyleConfig({ variants });
+const customInput = defineMultiStyleConfig({ variants });
+
+export { customInput };

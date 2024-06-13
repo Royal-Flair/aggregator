@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState } from "react";
 import { Stack } from "@chakra-ui/react";
@@ -10,8 +10,7 @@ const ArticlePage = () => {
 
   return (
     <Stack spacing={5} position="relative" className="mainContainer">
-      <ArticleSettings body={contentMarkdown} />
-      <WriteArticle setContentMarkdown={setContentMarkdown} />
+      <iframe width="100%" height="1400px" src="http://localhost:3001/dashboard/posts/create" />
     </Stack>
   );
 };
