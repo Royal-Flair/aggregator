@@ -4,7 +4,7 @@ import {
   Accordion,
   AccordionItem,
   Box,
-  Input as ChakraInput,
+  Input,
   AccordionIcon,
   AccordionButton,
   AccordionPanel,
@@ -95,7 +95,7 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                 <Stack spacing={2}>
                   <FormControl>
                     <Heading variant="tertiary-heading">Title</Heading>
-                    <ChakraInput
+                    <Input
                       name="title"
                       type="text"
                       placeholder="Title of the Article"
@@ -106,7 +106,7 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                   </FormControl>
                   <FormControl>
                     <Heading variant="tertiary-heading">Description</Heading>
-                    <ChakraInput
+                    <Input
                       name="description"
                       type="text"
                       placeholder="Description of the Article"
@@ -128,7 +128,7 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                       </div>
                     )}
                     <FormControl>
-                      <ChakraInput
+                      <Input
                         name="thumbnail"
                         type="file"
                         onChange={async (e) => {
