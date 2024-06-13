@@ -4,11 +4,11 @@ import {
   Accordion,
   AccordionItem,
   Box,
+  Input,
   AccordionIcon,
   AccordionButton,
   AccordionPanel,
   Heading,
-  Input,
   FormControl,
   Image,
   Button,
@@ -89,7 +89,6 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                 <Box as="span" flex="1" textAlign="left">
                   <Heading variant="tertiary-heading">Article Setting</Heading>
                 </Box>
-
                 <AccordionIcon />
               </AccordionButton>
               <AccordionPanel pb={4}>
@@ -97,10 +96,9 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                   <FormControl>
                     <Heading variant="tertiary-heading">Title</Heading>
                     <Input
-                      variant={"form-input"}
                       name="title"
                       type="text"
-                      placeholder={"Title of the Article"}
+                      placeholder="Title of the Article"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.title}
@@ -109,10 +107,9 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                   <FormControl>
                     <Heading variant="tertiary-heading">Description</Heading>
                     <Input
-                      variant={"form-input"}
                       name="description"
                       type="text"
-                      placeholder={"Description of the Article"}
+                      placeholder="Description of the Article"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.description}
@@ -120,7 +117,7 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                   </FormControl>
                   <Heading variant="tertiary-heading">Thumbnail</Heading>
                   <Stack>
-                    {imgURL != null && (
+                    {imgURL && (
                       <div>
                         <Image
                           width={{ base: "100%", md: "60%", lg: "40%" }}
@@ -132,7 +129,6 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                     )}
                     <FormControl>
                       <Input
-                        variant={"form-input-file"}
                         name="thumbnail"
                         type="file"
                         onChange={async (e) => {
@@ -141,14 +137,10 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                           const timestamp = Date.now();
                           const { data, error } = await supabase.storage
                             .from("thumbnail")
-                            .upload(
-                              `${timestamp}-${files[0].name}`,
-                              files[0],
-                              {
-                                cacheControl: "3600",
-                                upsert: false,
-                              }
-                            );
+                            .upload(`${timestamp}-${files[0].name}`, files[0], {
+                              cacheControl: "3600",
+                              upsert: false,
+                            });
                           if (error) {
                             console.log(error);
                             return;
@@ -164,19 +156,18 @@ const ArticleSettings = ({ body }: ArticleSettingProps) => {
                     </FormControl>
                   </Stack>
                   <FormControl>
-                    <Heading variant="tertiary-heading">Tag(Max:4)</Heading>
+                    <Heading variant="tertiary-heading">Tag (Max: 4)</Heading>
                     <Select
                       id="tags_label"
                       name="tags_label"
                       variant="filled"
-                      isMulti={true}
+                      isMulti
                       colorScheme="purple"
                       value={values.tags.map((tag) => ({
                         value: tag,
                         label: tag,
                       }))}
                       onChange={(e) => {
-                        setFieldValue("tags_label", e);
                         const tagArr = e.map((item) => item.value);
                         setFieldValue("tags", tagArr);
                       }}

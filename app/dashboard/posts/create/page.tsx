@@ -11,7 +11,7 @@ const ArticlePage = () => {
   return (
     <Stack spacing={5} position="relative" className="mainContainer">
       <ArticleSettings body={contentMarkdown} />
-      <WriteArticle setContentMarkdown={(content) => setContentMarkdown(content)} />
+      <WriteArticle setContentMarkdown={setContentMarkdown} />
     </Stack>
   );
 };
