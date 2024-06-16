@@ -13,18 +13,19 @@ model User {
   name             String?
   email            String        @unique
   stripeCustomerId String?       @unique
-  colorScheme      String        @default("theme-red")
+  colorScheme      String        @default("theme-orange")
   Adresse          String        @default("12 Evergreen Terrace")
   Fanclub          String        @default("Nordkurve12")
   Land             String        @default("Deutschland")
   Ort              String        @default("Leverkusen")
   Plz              String        @default("51373")
   Telefon          String        @default("0172-85858")
-  memberId         Int?          @default(1)  // Allow memberId to be nullable
+  memberId         Int?
+  Eintrittsdatum   DateTime?
+  geb_datum        DateTime?
   Notes            Note[]
   Subscription     Subscription?
 }
-
 
 model Subscription {
   stripeSubscriptionId String   @id @unique

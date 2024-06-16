@@ -39,6 +39,8 @@ async function getData(userId: string) {
       Land: true,
       Ort: true,
       Plz: true,
+      geb_datum: true,
+      Eintrittsdatum: true,
     },
   });
 
@@ -63,6 +65,7 @@ export default async function SettingPage() {
     const Ort = formData.get("Ort") as string;
     const Plz = formData.get("Plz") as string;
     const memberId = formData.get("memberId") as string;
+    const geb_datum = formData.get("geb_datum") as string;
 
     await prisma.user.update({
       where: {
@@ -77,6 +80,7 @@ export default async function SettingPage() {
         Ort: Ort ?? undefined,
         memberId: memberId ? parseInt(memberId) : undefined,
         Plz: Plz ?? undefined,
+        geb_datum: geb_datum ? new Date(geb_datum) : undefined,
       },
     });
 
@@ -97,7 +101,7 @@ export default async function SettingPage() {
           <CardHeader>
             <CardTitle>General Data</CardTitle>
             <CardDescription>
-              Please provide general information about yourself. Please dont
+              Please provide general information about yourself. Please don't
               forget to save
             </CardDescription>
           </CardHeader>
@@ -114,7 +118,7 @@ export default async function SettingPage() {
                 />
               </div>
               <div className="space-y-1">
-                <Label>Your membership id</Label>
+                <Label>Your membership ID</Label>
                 <Input
                   name="memberId"
                   type="text"
@@ -145,7 +149,6 @@ export default async function SettingPage() {
                   defaultValue={data?.Adresse as string}
                 />
               </div>
-
               <div className="space-y-1">
                 <Label>Color Scheme</Label>
                 <Select name="color" defaultValue={data?.colorScheme}>
@@ -166,7 +169,6 @@ export default async function SettingPage() {
                   </SelectContent>
                 </Select>
               </div>
-
               <div className="space-y-1">
                 <Label>Your Fanclub</Label>
                 <Input
@@ -205,6 +207,26 @@ export default async function SettingPage() {
                   id="Plz"
                   placeholder="Your Plz"
                   defaultValue={data?.Plz ?? undefined}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label>Entry Date</Label>
+                <Input
+                  name="Eintrittsdatum"
+                  type="text"
+                  id="Eintrittsdatum"
+                  placeholder="Your Entry Date"
+                  defaultValue={data?.Eintrittsdatum?.toISOString().split('T')[0] ?? ""}
+                  disabled
+                />
+              </div>
+              <div className="space-y-1">
+                <Label>Date of Birth</Label>
+                <Input
+                  name="geb_datum"
+                  type="date"
+                  id="geb_datum"
+                  defaultValue={data?.geb_datum?.toISOString().split('T')[0] ?? ""}
                 />
               </div>
             </div>
