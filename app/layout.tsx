@@ -1,3 +1,5 @@
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
@@ -6,6 +8,9 @@ import prisma from "./lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { unstable_noStore as noStore } from "next/cache";
 import CartProvider from "./components/Commerce/context/Context";
+import { useState } from "react";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,27 +34,31 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  const data = await getData(user?.id as string);
+  // const { getUser } = getKindeServerSession();
+  // const user = await getUser();
+  // const data = await getData(user?.id as string);
+
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
 
   const APP_NAME = 'Nordkurve';
   const APP_DESCRIPTION = 'Bayer 04 Ultras';
 
   return (
     <html lang="en">
-      <body className={`${inter.className} ${data?.colorScheme ?? "theme-zinc"}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <CartProvider>
-            <Navbar />
-            {children}
-          </CartProvider>
-        </ThemeProvider>
+      <body className={`${inter.className} "theme-zinc"}`}>
+        <SessionContextProvider supabaseClient={supabaseClient} initialSession={null}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <CartProvider>
+              <Navbar />
+              {children}
+            </CartProvider>
+          </ThemeProvider>
+        </SessionContextProvider>
       </body>
     </html>
   );

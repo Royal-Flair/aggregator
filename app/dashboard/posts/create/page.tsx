@@ -21,6 +21,7 @@ const allowedEmails = [
   "wuppi@nk12.de",
   "poeschke@nk12.de",
   "liam@skinetics.tech",
+  "arbuckle.liam@gmail.com",
   "kyuedupfavghdqxcnf@cazlg.com",
   "ahvlybvleaxjiymajb@cazlp.com",
 ];
