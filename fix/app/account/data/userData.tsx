@@ -130,10 +130,218 @@ export default function AccountForm({ user }: { user: User | null }) {
         throw error;
       }
 
-      alert('Telefon updated!');
+      alert('Fanclub updated!');
     } catch (error: any) {
-      console.error('Error updating telefon:', error.message);
-      alert('Error updating telefon!');
+      console.error('Error updating Fanclub:', error.message);
+      alert('Error updating Fanclub!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateNachname(nachname: string) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ nachname })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('Nachname updated!');
+    } catch (error: any) {
+      console.error('Error updating Nachname:', error.message);
+      alert('Error updating Nachname!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateVorname(vorname: string) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ vorname })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('Vorname updated!');
+    } catch (error: any) {
+      console.error('Error updating Vorname:', error.message);
+      alert('Error updating Vorname!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // async function updateEmail(e_mail: string) {
+  //   try {
+  //     setLoading(true);
+
+  //     if (!userDatas) {
+  //       throw new Error('Userdatas not loaded');
+  //     }
+
+  //     const { error } = await supabase
+  //       .from('userdatas')
+  //       .update({ e_mail })
+  //       .eq('id', userDatas.id);
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     alert('E-Mail updated!');
+  //   } catch (error: any) {
+  //     console.error('Error updating E-Mail:', error.message);
+  //     alert('Error updating E-Mail!');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+  async function updateAdresse(adresse: string) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ adresse })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('Adresse updated!');
+    } catch (error: any) {
+      console.error('Error updating Adresse:', error.message);
+      alert('Error updating Adresse!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updatePLZ(plz: string) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ plz })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('PLZ updated!');
+    } catch (error: any) {
+      console.error('Error updating PLZ:', error.message);
+      alert('Error updating PLZ!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateOrt(ort: string) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ ort })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('Ort updated!');
+    } catch (error: any) {
+      console.error('Error updating Ort:', error.message);
+      alert('Error updating Ort!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateLand(land: string) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ land })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('Land updated!');
+    } catch (error: any) {
+      console.error('Error updating Land:', error.message);
+      alert('Error updating Land!');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateGebDatum(geb_datum: Date | null) {
+    try {
+      setLoading(true);
+
+      if (!userDatas) {
+        throw new Error('Userdatas not loaded');
+      }
+
+      const { error } = await supabase
+        .from('userdatas')
+        .update({ geb_datum })
+        .eq('id', userDatas.id);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('Geburtsdatum updated!');
+    } catch (error: any) {
+      console.error('Error updating Geburtsdatum:', error.message);
+      alert('Error updating Geburtsdatum!');
     } finally {
       setLoading(false);
     }
@@ -195,7 +403,7 @@ export default function AccountForm({ user }: { user: User | null }) {
           </div>
           <Button type="submit">Fetch Member Data</Button>
         </form>
-
+  
         <div>
           <label htmlFor="email">Email</label>
           <input id="email" type="text" value={user?.email} disabled />
@@ -215,13 +423,12 @@ export default function AccountForm({ user }: { user: User | null }) {
             id="telefon"
             type="text"
             value={userDatas?.telefon || ''}
-            onChange={(e) => {
-              const newTelefon = e.target.value;
+            onChange={(e) =>
               setUserDatas((prevUserDatas: any) => ({
                 ...prevUserDatas,
-                telefon: newTelefon,
-              }));
-            }}
+                telefon: e.target.value,
+              }))
+            }
           />
           <Button onClick={() => updateTelefon(userDatas?.telefon)}>Update Telefon</Button>
         </div>
@@ -231,15 +438,14 @@ export default function AccountForm({ user }: { user: User | null }) {
             id="fanclub"
             type="text"
             value={userDatas?.fanclub || ''}
-            onChange={(e) => {
-              const newFanclub = e.target.value;
+            onChange={(e) =>
               setUserDatas((prevUserDatas: any) => ({
                 ...prevUserDatas,
-                fanclub: newFanclub,
-              }));
-            }}
+                fanclub: e.target.value,
+              }))
+            }
           />
-          <Button onClick={() => updateFanclub(userDatas?.fanclub)}>Update fanclub</Button>
+          <Button onClick={() => updateFanclub(userDatas?.fanclub)}>Update Fanclub</Button>
         </div>
         <div>
           <label htmlFor="username">Username</label>
@@ -259,18 +465,128 @@ export default function AccountForm({ user }: { user: User | null }) {
             onChange={(e) => setWebsite(e.target.value)}
           />
         </div>
-
-        {/* Display userdatas if available */}
+        <div>
+          <label htmlFor="nachname">Nachname</label>
+          <input
+            id="nachname"
+            type="text"
+            value={userDatas?.nachname || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                nachname: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updateNachname(userDatas?.nachname)}>Update Nachname</Button>
+        </div>
+        <div>
+          <label htmlFor="vorname">Vorname</label>
+          <input
+            id="vorname"
+            type="text"
+            value={userDatas?.vorname || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                vorname: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updateVorname(userDatas?.vorname)}>Update Vorname</Button>
+        </div>
+        <div>
+          <label htmlFor="adresse">Adresse</label>
+          <input
+            id="adresse"
+            type="text"
+            value={userDatas?.adresse || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                adresse: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updateAdresse(userDatas?.adresse)}>Update Adresse</Button>
+        </div>
+        <div>
+          <label htmlFor="plz">PLZ</label>
+          <input
+            id="plz"
+            type="text"
+            value={userDatas?.plz || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                plz: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updatePLZ(userDatas?.plz)}>Update PLZ</Button>
+        </div>
+        <div>
+          <label htmlFor="ort">Ort</label>
+          <input
+            id="ort"
+            type="text"
+            value={userDatas?.ort || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                ort: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updateOrt(userDatas?.ort)}>Update Ort</Button>
+        </div>
+        <div>
+          <label htmlFor="land">Land</label>
+          <input
+            id="land"
+            type="text"
+            value={userDatas?.land || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                land: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updateLand(userDatas?.land)}>Update Land</Button>
+        </div>
+        <div>
+          <label htmlFor="gebDatum">Geburtsdatum</label>
+          <input
+            id="gebDatum"
+            type="date"
+            value={userDatas?.geb_datum || ''}
+            onChange={(e) =>
+              setUserDatas((prevUserDatas: any) => ({
+                ...prevUserDatas,
+                geb_datum: e.target.value,
+              }))
+            }
+          />
+          <Button onClick={() => updateGebDatum(userDatas?.geb_datum)}>Update Geburtsdatum</Button>
+        </div>
+  
+        {/* Display other fields from userdatas as needed */}
         {userDatas && (
           <div>
             <h2>User Data Details</h2>
-            <p>Member ID: {userDatas.memberid}</p>
-            <p>Telefon: {userDatas.telefon}</p>
-            <p>Fanclub: {userDatas.fanclub}</p>
+            {/* Example additional fields */}
+            <p>Nachname: {userDatas.nachname}</p>
+            <p>Vorname: {userDatas.vorname}</p>
+            <p>Adresse: {userDatas.adresse}</p>
+            <p>PLZ: {userDatas.plz}</p>
+            <p>Ort: {userDatas.ort}</p>
+            <p>Land: {userDatas.land}</p>
+            <p>Geburtsdatum: {userDatas.geb_datum}</p>
             {/* Display other fields from userdatas as needed */}
           </div>
         )}
       </div>
     </Card>
-  );
+  );  
 }

@@ -25,6 +25,12 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Link href="/" className={s.link}>
             Pricing
           </Link>
+          <Link href="/newsletter" className={s.link}> {/* https://nordkurve12.vercel.app */}
+            Newsletter
+          </Link>
+          <Link href="https://nk12shop.vercel.app" className={s.link}>
+            Store
+          </Link>
           {user && (
             <Link href="/account" className={s.link}>
               Account
