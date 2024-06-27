@@ -19,7 +19,7 @@ export const getStripeSession = async ({
     mode: "subscription",
     billing_address_collection: "auto",
     line_items: [{ price: priceId, quantity: 1 }],
-    payment_method_types: ["card"],
+    payment_method_types: ['card', 'sepa_debit'],
     customer_update: {
       address: "auto",
       name: "auto",
