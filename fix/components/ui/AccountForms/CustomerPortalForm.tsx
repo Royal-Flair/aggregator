@@ -49,18 +49,17 @@ export default function CustomerPortalForm({ subscription }: Props) {
       title="Your Plan"
       description={
         subscription
-          ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
+          ? `Membership: ${subscription?.prices?.products?.name}`
           : 'You are not currently subscribed to any plan.'
       }
       footer={
         <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-          <p className="pb-4 sm:pb-0">Manage your subscription on Stripe.</p>
           <Button
             variant="slim"
             onClick={handleStripePortalRequest}
             loading={isSubmitting}
           >
-            Open customer portal
+            Manage your subscription
           </Button>
         </div>
       }

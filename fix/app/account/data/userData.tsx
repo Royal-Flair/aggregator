@@ -9,8 +9,6 @@ export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
   const [loading, setLoading] = useState(true);
   const [fullname, setFullname] = useState<string | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
-  const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const [memberId, setMemberId] = useState<string>('');
   const [userDatas, setUserDatas] = useState<any>(null); 
@@ -351,20 +349,31 @@ export default function AccountForm({ user }: { user: User | null }) {
     e.preventDefault();
     try {
       setLoading(true);
-
+  
       const { data, error } = await supabase
         .from('userdatas')
         .select('*')
         .eq('memberid', parseInt(memberId))
         .single();
-
+  
       if (error) {
         throw error;
       }
-
+  
       if (data) {
         setUserDatas(data);
-        alert('Member data found and loaded!');
+  
+        // Update the memberid in the users table
+        const { error: updateError } = await supabase
+          .from('users')
+          .update({ memberid: parseInt(memberId) })
+          .eq('id', user?.id);
+  
+        if (updateError) {
+          throw updateError;
+        }
+  
+        alert('Member data found, loaded, and member ID updated in users table!');
       } else {
         alert('Member data not found!');
       }
@@ -375,6 +384,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       setLoading(false);
     }
   };
+  
 
   return (
     <Card
@@ -390,203 +400,191 @@ export default function AccountForm({ user }: { user: User | null }) {
         </Button>
       }
     >
-      <div className="form-widget">
-        <form onSubmit={handleSubmitMemberId}>
-          <div>
-            <label htmlFor="memberId">Member ID</label>
+      <div className="form-widget space-y-6">
+      <form onSubmit={handleSubmitMemberId} className="space-y-4">
+        <div className="flex flex-col">
+          <label htmlFor="memberId" className="text-sm font-medium text-gray-700">Member ID</label>
+          <input
+            id="memberId"
+            type="text"
+            value={memberId}
+            onChange={(e) => setMemberId(e.target.value)}
+            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
+          <Button type="submit" className="mt-2">Fetch Member Data</Button>
+        </div>
+      </form>
+
+        <div className="space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-sm font-medium text-gray-700">Email</label>
             <input
-              id="memberId"
+              id="email"
               type="text"
-              value={memberId}
-              onChange={(e) => setMemberId(e.target.value)}
+              value={user?.email}
+              disabled
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
             />
           </div>
-          <Button type="submit">Fetch Member Data</Button>
-        </form>
-  
-        <div>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="text" value={user?.email} disabled />
-        </div>
-        <div>
-          <label htmlFor="fullName">Full Name</label>
-          <input
-            id="fullName"
-            type="text"
-            value={fullname || ''}
-            onChange={(e) => setFullname(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="telefon">Telefon</label>
-          <input
-            id="telefon"
-            type="text"
-            value={userDatas?.telefon || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                telefon: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateTelefon(userDatas?.telefon)}>Update Telefon</Button>
-        </div>
-        <div>
-          <label htmlFor="fanclub">Fanclub</label>
-          <input
-            id="fanclub"
-            type="text"
-            value={userDatas?.fanclub || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                fanclub: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateFanclub(userDatas?.fanclub)}>Update Fanclub</Button>
-        </div>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            value={username || ''}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="website">Website</label>
-          <input
-            id="website"
-            type="url"
-            value={website || ''}
-            onChange={(e) => setWebsite(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="nachname">Nachname</label>
-          <input
-            id="nachname"
-            type="text"
-            value={userDatas?.nachname || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                nachname: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateNachname(userDatas?.nachname)}>Update Nachname</Button>
-        </div>
-        <div>
-          <label htmlFor="vorname">Vorname</label>
-          <input
-            id="vorname"
-            type="text"
-            value={userDatas?.vorname || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                vorname: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateVorname(userDatas?.vorname)}>Update Vorname</Button>
-        </div>
-        <div>
-          <label htmlFor="adresse">Adresse</label>
-          <input
-            id="adresse"
-            type="text"
-            value={userDatas?.adresse || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                adresse: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateAdresse(userDatas?.adresse)}>Update Adresse</Button>
-        </div>
-        <div>
-          <label htmlFor="plz">PLZ</label>
-          <input
-            id="plz"
-            type="text"
-            value={userDatas?.plz || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                plz: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updatePLZ(userDatas?.plz)}>Update PLZ</Button>
-        </div>
-        <div>
-          <label htmlFor="ort">Ort</label>
-          <input
-            id="ort"
-            type="text"
-            value={userDatas?.ort || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                ort: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateOrt(userDatas?.ort)}>Update Ort</Button>
-        </div>
-        <div>
-          <label htmlFor="land">Land</label>
-          <input
-            id="land"
-            type="text"
-            value={userDatas?.land || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                land: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateLand(userDatas?.land)}>Update Land</Button>
-        </div>
-        <div>
-          <label htmlFor="gebDatum">Geburtsdatum</label>
-          <input
-            id="gebDatum"
-            type="date"
-            value={userDatas?.geb_datum || ''}
-            onChange={(e) =>
-              setUserDatas((prevUserDatas: any) => ({
-                ...prevUserDatas,
-                geb_datum: e.target.value,
-              }))
-            }
-          />
-          <Button onClick={() => updateGebDatum(userDatas?.geb_datum)}>Update Geburtsdatum</Button>
-        </div>
-  
-        {/* Display other fields from userdatas as needed */}
-        {userDatas && (
-          <div>
-            <h2>User Data Details</h2>
-            {/* Example additional fields */}
-            <p>Nachname: {userDatas.nachname}</p>
-            <p>Vorname: {userDatas.vorname}</p>
-            <p>Adresse: {userDatas.adresse}</p>
-            <p>PLZ: {userDatas.plz}</p>
-            <p>Ort: {userDatas.ort}</p>
-            <p>Land: {userDatas.land}</p>
-            <p>Geburtsdatum: {userDatas.geb_datum}</p>
-            {/* Display other fields from userdatas as needed */}
+
+          <div className="flex flex-col">
+            <label htmlFor="telefon" className="text-sm font-medium text-gray-700">Telefon</label>
+            <input
+              id="telefon"
+              type="text"
+              value={userDatas?.telefon || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  telefon: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateTelefon(userDatas?.telefon)} className="mt-2">Update Telefon</Button>
           </div>
-        )}
+          <div className="flex flex-col">
+            <label htmlFor="fanclub" className="text-sm font-medium text-gray-700">Fanclub</label>
+            <input
+              id="fanclub"
+              type="text"
+              value={userDatas?.fanclub || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  fanclub: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateFanclub(userDatas?.fanclub)} className="mt-2">Update Fanclub</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="nachname" className="text-sm font-medium text-gray-700">Nachname</label>
+            <input
+              id="nachname"
+              type="text"
+              value={userDatas?.nachname || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  nachname: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateNachname(userDatas?.nachname)} className="mt-2">Update Nachname</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="vorname" className="text-sm font-medium text-gray-700">Vorname</label>
+            <input
+              id="vorname"
+              type="text"
+              value={userDatas?.vorname || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  vorname: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateVorname(userDatas?.vorname)} className="mt-2">Update Vorname</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="adresse" className="text-sm font-medium text-gray-700">Adresse</label>
+            <input
+              id="adresse"
+              type="text"
+              value={userDatas?.adresse || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  adresse: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateAdresse(userDatas?.adresse)} className="mt-2">Update Adresse</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="plz" className="text-sm font-medium text-gray-700">PLZ</label>
+            <input
+              id="plz"
+              type="text"
+              value={userDatas?.plz || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  plz: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updatePLZ(userDatas?.plz)} className="mt-2">Update PLZ</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="ort" className="text-sm font-medium text-gray-700">Ort</label>
+            <input
+              id="ort"
+              type="text"
+              value={userDatas?.ort || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  ort: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateOrt(userDatas?.ort)} className="mt-2">Update Ort</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="land" className="text-sm font-medium text-gray-700">Land</label>
+            <input
+              id="land"
+              type="text"
+              value={userDatas?.land || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  land: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateLand(userDatas?.land)} className="mt-2">Update Land</Button>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="gebDatum" className="text-sm font-medium text-gray-700">Geburtsdatum</label>
+            <input
+              id="gebDatum"
+              type="date"
+              value={userDatas?.geb_datum || ''}
+              onChange={(e) =>
+                setUserDatas((prevUserDatas: any) => ({
+                  ...prevUserDatas,
+                  geb_datum: e.target.value,
+                }))
+              }
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button onClick={() => updateGebDatum(userDatas?.geb_datum)} className="mt-2">Update Geburtsdatum</Button>
+          </div>
+        </div>
       </div>
     </Card>
-  );  
-}
+  );
+};
+
+export async function AccountFormAsPage() {
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  return (
+    <AccountForm user={user} />
+  );
+};

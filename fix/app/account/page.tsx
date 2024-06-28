@@ -8,7 +8,7 @@ import {
   getSubscription,
   getUser
 } from '@/utils/supabase/queries';
-import { useEffect, useState } from 'react';
+import AccountForm, { AccountFormAsPage } from './data/userData';
 
 export default async function Account() {
   const supabase = createClient();
@@ -22,34 +22,24 @@ export default async function Account() {
     return redirect('/signin');
   };
 
-  // const [userData, setUserData] = useState();
-  
-  // useEffect(() => {
-  //   (async () => {
-  //     const { data } = await supabase.from('users').select("*").eq("id", user.id).single();
-  //     setUserData(data);
-  //   })();
-  // }, [user]);
-
   return (
-    <section className="mb-32 bg-gray">
+    <section className="mb-32 bg-white">
       <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
-          <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+          <h1 className="text-4xl font-extrabold text-black sm:text-center sm:text-6xl">
             Account
           </h1>
-          <p>{user.id}</p>
-          {/* <p>{userData}</p> */}
-          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
-            We partnered with Stripe for a simplified billing.
+          {/* <p>{user.id}</p> */}
+          <p className="max-w-2xl m-auto mt-5 text-xl text-gray-700 sm:text-center sm:text-2xl">
+            Manage your account & user data here
           </p>
         </div>
       </div>
       <div className="p-4">
         <CustomerPortalForm subscription={subscription} />
-        <NameForm userName={userDetails?.full_name ?? ''} />
         <EmailForm userEmail={user.email} />
       </div>
+      <AccountFormAsPage />
     </section>
   );
 }
