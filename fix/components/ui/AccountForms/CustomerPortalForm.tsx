@@ -46,7 +46,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
 
   return (
     <Card
-      title="Your Plan"
+      title="Your membership"
       description={
         subscription
           ? `Membership: ${subscription?.prices?.products?.name}`
@@ -59,7 +59,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
             onClick={handleStripePortalRequest}
             loading={isSubmitting}
           >
-            Manage your subscription
+            Manage your membership
           </Button>
         </div>
       }
@@ -68,7 +68,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
         {subscription ? (
           `${subscriptionPrice}/${subscription?.prices?.interval}`
         ) : (
-          <Link href="/">Choose your plan</Link>
+          <Link href="/">Choose your membership</Link>
         )}
       </div>
     </Card>

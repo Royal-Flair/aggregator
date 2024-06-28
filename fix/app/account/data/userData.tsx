@@ -11,7 +11,14 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [fullname, setFullname] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const [memberId, setMemberId] = useState<string>('');
-  const [userDatas, setUserDatas] = useState<any>(null); 
+  const [userDatas, setUserDatas] = useState<any>(null);
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (user) {
+      setUserEmail(user.email); // Fetching user's email from supabase auth
+    }
+  }, [user]);
 
   const getProfile = useCallback(async () => {
     try {
@@ -54,6 +61,14 @@ export default function AccountForm({ user }: { user: User | null }) {
       setLoading(false);
     }
   }, [user, supabase]);
+
+  useEffect(() => {
+    getProfile();
+  }, [user, getProfile]);
+
+  useEffect(() => {
+    getProfile();
+  }, [user, getProfile]);
 
   useEffect(() => {
     getProfile();
@@ -349,33 +364,47 @@ export default function AccountForm({ user }: { user: User | null }) {
     e.preventDefault();
     try {
       setLoading(true);
-  
+
       const { data, error } = await supabase
         .from('userdatas')
         .select('*')
-        .eq('memberid', parseInt(memberId))
+        .eq('e_mail', userEmail) // Searching for userdatas row with matching email
         .single();
-  
+
       if (error) {
         throw error;
       }
-  
+
       if (data) {
         setUserDatas(data);
-  
+
         // Update the memberid in the users table
         const { error: updateError } = await supabase
           .from('users')
-          .update({ memberid: parseInt(memberId) })
+          .update({ memberid: data.memberid })
           .eq('id', user?.id);
-  
+
         if (updateError) {
           throw updateError;
         }
-  
+
         alert('Member data found, loaded, and member ID updated in users table!');
       } else {
-        alert('Member data not found!');
+        // If no matching userdatas found, create a new row
+        const { data: newUserData, error: newUserDataError } = await supabase
+          .from('userdatas')
+          .insert({
+            e_mail: userEmail,
+            memberid: memberId ? parseInt(memberId) : 1, // Adjust this logic based on your requirements
+          })
+          .single();
+
+        if (newUserDataError) {
+          throw newUserDataError;
+        }
+
+        setUserDatas(newUserData);
+        alert('New user data created and member ID updated!');
       }
     } catch (error: any) {
       console.error('Error fetching member data:', error.message);
@@ -384,7 +413,6 @@ export default function AccountForm({ user }: { user: User | null }) {
       setLoading(false);
     }
   };
-  
 
   return (
     <Card
@@ -401,19 +429,19 @@ export default function AccountForm({ user }: { user: User | null }) {
       }
     >
       <div className="form-widget space-y-6">
-      <form onSubmit={handleSubmitMemberId} className="space-y-4">
-        <div className="flex flex-col">
-          <label htmlFor="memberId" className="text-sm font-medium text-gray-700">Member ID</label>
-          <input
-            id="memberId"
-            type="text"
-            value={memberId}
-            onChange={(e) => setMemberId(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
-          />
-          <Button type="submit" className="mt-2">Fetch Member Data</Button>
-        </div>
-      </form>
+        <form onSubmit={handleSubmitMemberId} className="space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="memberId" className="text-sm font-medium text-gray-700">Member ID</label>
+            <input
+              id="memberId"
+              type="text"
+              value={memberId}
+              onChange={(e) => setMemberId(e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+            />
+            <Button type="submit" className="mt-2">Fetch Member Data</Button>
+          </div>
+        </form>
 
         <div className="space-y-4">
           <div className="flex flex-col">
