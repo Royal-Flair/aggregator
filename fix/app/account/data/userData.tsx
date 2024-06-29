@@ -48,9 +48,33 @@ export default function AccountForm({ user }: { user: User | null }) {
 
           if (fetchedUserDatas && !userDatasError) {
             setUserDatas(fetchedUserDatas);
-            // Example mapping memberId from userdatas
-            setMemberId(fetchedUserDatas.memberid.toString());
-            // Set other fields as needed
+            if (fetchedUserDatas.memberid != null) {
+              setMemberId(fetchedUserDatas.memberid.toString());
+            }
+          }
+        } else if (userEmail) {
+          // Fetch userdatas using email if userdatas field is null
+          const { data: fetchedUserDatas, error: userDatasError } = await supabase
+            .from('userdatas')
+            .select('*')
+            .eq('e_mail', userEmail)
+            .single();
+
+          if (fetchedUserDatas && !userDatasError) {
+            setUserDatas(fetchedUserDatas);
+
+            const { error: updateError } = await supabase
+              .from('users')
+              .update({ userdatas: fetchedUserDatas.id })
+              .eq('id', user?.id);
+
+            if (updateError) {
+              throw updateError;
+            }
+
+            if (fetchedUserDatas.memberid != null) {
+              setMemberId(fetchedUserDatas.memberid.toString());
+            }
           }
         }
       }
@@ -60,15 +84,7 @@ export default function AccountForm({ user }: { user: User | null }) {
     } finally {
       setLoading(false);
     }
-  }, [user, supabase]);
-
-  useEffect(() => {
-    getProfile();
-  }, [user, getProfile]);
-
-  useEffect(() => {
-    getProfile();
-  }, [user, getProfile]);
+  }, [user, userEmail, supabase]);
 
   useEffect(() => {
     getProfile();
@@ -360,6 +376,45 @@ export default function AccountForm({ user }: { user: User | null }) {
     }
   }
 
+  async function generateMemberId() {
+    try {
+      setLoading(true);
+  
+      // Fetch the highest memberid in the userdatas table
+      const { data: highestMemberIdData, error: highestMemberIdError } = await supabase
+        .from('userdatas')
+        .select('memberid')
+        .order('memberid', { ascending: false })
+        .limit(1)
+        .single();
+  
+      if (highestMemberIdError) {
+        throw highestMemberIdError;
+      }
+  
+      const newMemberId = highestMemberIdData ? highestMemberIdData.memberid + 1 : 1;
+  
+      // Update the current user's memberid
+      const { error: updateMemberIdError } = await supabase
+        .from('userdatas')
+        .update({ memberid: newMemberId })
+        .eq('id', userDatas.id);
+  
+      if (updateMemberIdError) {
+        throw updateMemberIdError;
+      }
+  
+      setMemberId(newMemberId.toString());
+      alert('New Member ID generated!');
+    } catch (error: any) {
+      console.error('Error generating member ID:', error.message);
+      alert('Error generating member ID!');
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+
   const handleSubmitMemberId = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -429,20 +484,6 @@ export default function AccountForm({ user }: { user: User | null }) {
       }
     >
       <div className="form-widget space-y-6">
-        <form onSubmit={handleSubmitMemberId} className="space-y-4">
-          <div className="flex flex-col">
-            <label htmlFor="memberId" className="text-sm font-medium text-gray-700">Member ID</label>
-            <input
-              id="memberId"
-              type="text"
-              value={memberId}
-              onChange={(e) => setMemberId(e.target.value)}
-              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
-            />
-            <Button type="submit" className="mt-2">Fetch Member Data</Button>
-          </div>
-        </form>
-
         <div className="space-y-4">
           <div className="flex flex-col">
             <label htmlFor="email" className="text-sm font-medium text-gray-700">Email</label>
@@ -454,6 +495,21 @@ export default function AccountForm({ user }: { user: User | null }) {
               className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
             />
           </div>
+
+          {memberId ? (
+            <div className="flex flex-col">
+              <label htmlFor="memberId" className="text-sm font-medium text-gray-700">Member ID</label>
+              <input
+                id="memberId"
+                type="text"
+                value={memberId}
+                disabled
+                className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+              />
+            </div>
+          ) : (
+            <Button onClick={generateMemberId} className="mt-2">Generate Member ID</Button>
+          )}
 
           <div className="flex flex-col">
             <label htmlFor="telefon" className="text-sm font-medium text-gray-700">Telefon</label>

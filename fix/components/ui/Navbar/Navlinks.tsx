@@ -19,12 +19,10 @@ export default function Navlinks({ user }: NavlinksProps) {
     <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
       <div className="flex items-center flex-1">
         <Link href="/" className={s.logo} aria-label="Logo">
-          <Logo />
+          {/* <Logo /> */}
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx8pafgqap2SM8xEJ7AHE8xRdRfJr4ssfhfQ&s" height="32px" width="32px" />
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
-          <Link href="/" className={s.link}>
-            Pricing
-          </Link>
           <Link href="/newsletter" className={s.link}> {/* https://nordkurve12.vercel.app */}
             Newsletter
           </Link>

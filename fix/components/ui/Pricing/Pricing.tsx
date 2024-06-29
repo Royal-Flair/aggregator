@@ -104,17 +104,16 @@ export default function Pricing({ user, products, subscription }: Props) {
     );
   } else {
     return (
-      <section className="bg-black">
+      <section className="bg-gray-100">
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
           <div className="sm:flex sm:flex-col sm:align-center">
-            <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-              Pricing Plans
+            <h1 className="text-4xl font-extrabold text-black sm:text-center sm:text-6xl">
+              Nordkurve 12 e.V.
             </h1>
-            <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
-              Start building for free, then add a site plan to go live. Account
-              plans unlock additional features.
+            <p className="max-w-2xl m-auto mt-5 text-xl text-black-200 sm:text-center sm:text-2xl">
+              Verwalten Sie Ihr Konto, Spielkarten und sehen Sie sich den Newsletter auf der neuen Nordkurve-Plattform an
             </p>
-            <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
+            <div className="relative self-center mt-6 bg-red-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
               {intervals.includes('month') && (
                 <button
                   onClick={() => setBillingInterval('month')}
@@ -134,11 +133,11 @@ export default function Pricing({ user, products, subscription }: Props) {
                   type="button"
                   className={`${
                     billingInterval === 'year'
-                      ? 'relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white'
-                      : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
+                      ? 'relative w-1/2 bg-red-700 border-zinc-800 shadow-sm text-white'
+                      : 'ml-0.5 relative w-1/2 border border-transparent text-white'
                   } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
                 >
-                  Yearly billing
+                  Yearly membership
                 </button>
               )}
             </div>
@@ -196,7 +195,6 @@ export default function Pricing({ user, products, subscription }: Props) {
               );
             })}
           </div>
-          <LogoCloud />
         </div>
       </section>
     );
